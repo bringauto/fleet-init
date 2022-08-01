@@ -53,7 +53,14 @@
       "longitude": -0.11135928467
     }
   ],
-  "users": [],
+  "users": [
+    {
+        "email": "admin@bringauto.com",
+        "username": "Admin",
+        "password": "Admin1",
+        "role": "admin"
+      }
+  ],
   "routes": [
     {
       "name": "London",
