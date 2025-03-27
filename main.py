@@ -125,7 +125,7 @@ def main() -> None:
         Configuration(
             host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
         ),
-        cookie=f"tenant={config["DEFAULT"]["Tenant"]}",
+        cookie=f"tenant={config['DEFAULT']['Tenant']}",
     )
 
     args.maps = os.path.join(args.maps, "")
