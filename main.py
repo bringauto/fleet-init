@@ -117,6 +117,14 @@ def run_queries(api_client: ApiClient, json_config_path: str, already_added_cars
         car_api.create_cars(new_cars)
 
 
+def create_tenant(api_client: ApiClient, tenant_name: str) -> None:
+    tenant_api = TenantApi(api_client)
+    try:
+        tenant_api.create_tenants([Tenant(name=tenant_name)])
+    except:
+        print(f"Tenant {tenant_name} already exists")
+
+
 def main() -> None:
     args = argument_parser_init()
     if not file_exists(args.config):
@@ -128,8 +136,6 @@ def main() -> None:
         ),
         cookie=f"tenant={config['DEFAULT']['Tenant']}",
     )
-    tenant_api = TenantApi(api_client)
-    tenant_api.create_tenants([Tenant(name=config['DEFAULT']['Tenant'])])
     args.maps = os.path.join(args.maps, "")
     if args.delete:
         delete_all(api_client)
@@ -138,6 +144,7 @@ def main() -> None:
     for map_file in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file}")
         try:
+            create_tenant(api_client, config["DEFAULT"]["Tenant"])
             run_queries(api_client, map_file, already_added_cars)
         except Exception as exception:
             print(exception)
