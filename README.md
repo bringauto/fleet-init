@@ -17,8 +17,8 @@ Script for initialization of the [BringAuto Fleet Management] database - Script 
 Example:
 
 [DEFAULT]
-
-```
+pip
+```ini
 ApiKey = <ApiKey>
 Url = localhost
 Tenant = <TenantName>

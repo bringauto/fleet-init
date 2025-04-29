@@ -19,13 +19,14 @@ from fleet_management_http_client_python import (
     CarApi,
     Car,
     MobilePhone,
+    TenantApi,
+    Tenant,
 )
 
 
 def run_queries(api_client: ApiClient, json_config_path: str, already_added_cars: list) -> None:
     with open(json_config_path, "r", encoding="utf-8") as json_file:
         json_config = json.load(json_file)
-
     stop_api = StopApi(api_client)
     new_stops = list()
     for stop in json_config["stops"]:
@@ -127,7 +128,8 @@ def main() -> None:
         ),
         cookie=f"tenant={config['DEFAULT']['Tenant']}",
     )
-
+    tenant_api = TenantApi(api_client)
+    tenant_api.create_tenants([Tenant(name=config['DEFAULT']['Tenant'])])
     args.maps = os.path.join(args.maps, "")
     if args.delete:
         delete_all(api_client)
