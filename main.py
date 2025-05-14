@@ -28,6 +28,7 @@ from fleet_management_http_client_python.exceptions import (
 
 
 CarName = str
+RouteName = str
 
 
 def run_queries(
@@ -60,12 +61,12 @@ def run_queries(
     created_stops = stop_api.create_stops(new_stops)
 
     route_api = RouteApi(api_client)
-    new_routes = list()
-    new_visualizations = list()
-    visualization_stops = dict()
+    new_routes: list[Route] = list()
+    new_visualizations: list[RouteVisualization] = list()
+    visualization_stops: dict[RouteName, list[GNSSPosition]] = dict()
     for route in map_config["routes"]:
         stops = route["stops"]
-        stop_ids = list()
+        stop_ids: list[int] = list()
         visualization_stops[route["name"]] = list()
         for stop in stops:
             visualization_stops[route["name"]].append(
