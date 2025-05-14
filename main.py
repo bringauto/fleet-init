@@ -27,7 +27,12 @@ from fleet_management_http_client_python.exceptions import (
 )
 
 
-def run_queries(api_client: ApiClient, map_config_path: str, already_added_cars: list) -> None:
+CarName = str
+
+
+def run_queries(
+    api_client: ApiClient, map_config_path: str, already_added_cars: list[CarName]
+) -> None:
     with open(map_config_path, "r", encoding="utf-8") as json_file:
         map_config = json.load(json_file)
     stop_api = StopApi(api_client)
@@ -161,7 +166,7 @@ def main() -> None:
     if args.delete:
         delete_all(api_client)
         print("Fleet management deleted")
-    already_added_cars = list()
+    already_added_cars: list[CarName] = list()
     for map_file_path in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file_path}")
         try:
