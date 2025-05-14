@@ -34,8 +34,8 @@ RouteName = str
 def run_queries(
     api_client: ApiClient, map_config_path: str, already_added_cars: list[CarName]
 ) -> None:
-    with open(map_config_path, "r", encoding="utf-8") as json_file:
-        map_config = json.load(json_file)
+    with open(map_config_path, "r", encoding="utf-8") as map_file:
+        map_config = json.load(map_file)
     stop_api = StopApi(api_client)
     new_stops = list()
 
