@@ -37,9 +37,9 @@ def run_queries(
     with open(map_config_path, "r", encoding="utf-8") as map_file:
         map_config = json.load(map_file)
     stop_api = StopApi(api_client)
-    new_stops = list()
+    new_stops: list[Stop] = list()
 
-    tenant_name = map_config["tenant"]
+    tenant_name: str = map_config["tenant"]
     tenant_created = create_tenant(api_client, tenant_name)
     if not tenant_created:
         print(
@@ -99,8 +99,8 @@ def run_queries(
 
     platform_api = PlatformHWApi(api_client)
     car_api = CarApi(api_client)
-    new_platforms = list()
-    new_cars = list()
+    new_platforms: list[PlatformHW] = list()
+    new_cars: list[Car] = list()
     for platform in platform_api.get_hws():
         if platform.name not in already_added_cars:
             already_added_cars.append(platform.name)
