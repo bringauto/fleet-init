@@ -18,10 +18,10 @@ Example:
 
 [DEFAULT]
 pip
+
 ```ini
 ApiKey = <ApiKey>
 Url = localhost
-Tenant = <TenantName>
 ```
 
 ### Sections
