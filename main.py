@@ -40,7 +40,7 @@ def run_queries(api_client: ApiClient, map_config_path: str, already_added_cars:
             f"Tenant '{tenant_name}' could not be created. Cannot create entities for map '{map_config_path}'"
         )
         return
-
+    api_client.set_default_header("Cookie", "tenant=" + tenant_name)
     for stop in map_config["stops"]:
         print(f"New stop, name: {stop['name']}")
         new_stops.append(
@@ -137,10 +137,10 @@ def create_tenant(api_client: ApiClient, tenant_name: str) -> bool:
     except _BadRequestException as e:
         response = tenant_api.get_tenants()
         tenant_already_exists = any(t.name == tenant_name for t in response)
-        if tenant_already_exists:
+        if not tenant_already_exists:
             print(f"Tenant '{tenant_name}' already exists.")
         else:
-            print(f"Could not create tenant '{tenant_name}'. Error: {e}")
+            print(f"Tenant '{tenant_name}' does not exists and could not be created. Error: {e}")
         return tenant_already_exists
     except Exception as exception:
         print(f"Could not create tenant '{tenant_name}' due to {exception}")
