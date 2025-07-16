@@ -3,7 +3,12 @@ from os.path import isfile
 from configparser import ConfigParser
 
 from fleet_management_http_client_python import (
-    ApiClient, OrderApi, CarApi, PlatformHWApi, RouteApi, StopApi
+    ApiClient,
+    OrderApi,
+    CarApi,
+    PlatformHWApi,
+    RouteApi,
+    StopApi,
 )
 
 
@@ -25,7 +30,7 @@ def delete_all(api_client: ApiClient) -> None:
     for platform in platforms:
         print(f"Deleting platform {platform.id}, name: {platform.name}")
         platform_api.delete_hw(platform_hw_id=platform.id)
-    
+
     route_api = RouteApi(api_client)
     routes = route_api.get_routes()
     for route in routes:
@@ -48,12 +53,23 @@ def argument_parser_init() -> argparse.Namespace:
     argparse.Namespace : object with atributes
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str,
-                        help='Config file, default is config/config.ini', default='config/config.ini')
-    parser.add_argument('-m', '--maps', type=str,
-                        help='Directory with input files, default is maps/', default='maps/')
-    parser.add_argument('-d', '--delete', action='store_true',
-                        help='Delete all entities from database')
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        help="Config file, default is config/config.ini",
+        default="config/config.ini",
+    )
+    parser.add_argument(
+        "-m",
+        "--maps",
+        type=str,
+        help="Directory with input map config files, default is maps/",
+        default="maps/",
+    )
+    parser.add_argument(
+        "-d", "--delete", action="store_true", help="Delete all entities from database"
+    )
     return parser.parse_args()
 
 
