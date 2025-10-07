@@ -5,7 +5,7 @@ import json
 import os
 
 from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
-from fleet_management_http_client_python import (
+from fleet_management_http_client_python import ( # type: ignore
     ApiClient,
     Configuration,
     StopApi,
@@ -22,7 +22,7 @@ from fleet_management_http_client_python import (
     TenantApi,
     Tenant,
 )
-from fleet_management_http_client_python.exceptions import (
+from fleet_management_http_client_python.exceptions import ( # type: ignore
     BadRequestException as _BadRequestException,
 )
 
@@ -143,7 +143,7 @@ def create_tenant(api_client: ApiClient, tenant_name: str) -> bool:
     except _BadRequestException as e:
         response = tenant_api.get_tenants()
         tenant_already_exists = any(t.name == tenant_name for t in response)
-        if not tenant_already_exists:
+        if tenant_already_exists:
             print(f"Tenant '{tenant_name}' already exists.")
         else:
             print(f"Tenant '{tenant_name}' does not exists and could not be created. Error: {e}")
@@ -163,10 +163,17 @@ def main() -> None:
             host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
         )
     )
-    args.maps = os.path.join(args.maps, "")
+    
     if args.delete:
+        if not args.tenant:
+            print("Tenant name must be specified when deleting")
+            return
+        api_client.set_default_header("Cookie", "tenant=" + args.tenant)
         delete_all(api_client)
         print("Fleet management deleted")
+        return
+
+    args.maps = os.path.join(args.maps, "")
     already_added_cars: list[CarName] = list()
     for map_file_path in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file_path}")
