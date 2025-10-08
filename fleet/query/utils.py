@@ -86,13 +86,7 @@ def argument_parser_init() -> argparse.Namespace:
         "-d",
         "--delete",
         action="store_true",
-        help="Delete all entities from database, will not initialize anything else when used",
-    )
-    parser.add_argument(
-        "-t",
-        "--tenant",
-        type=str,
-        help="Tenant name to use, only used if --delete is used",
+        help="Delete all entities from database",
     )
     return parser.parse_args()
 

@@ -32,21 +32,11 @@ RouteName = str
 
 
 def run_queries(
-    api_client: ApiClient, map_config_path: str, already_added_cars: list[CarName]
+    api_client: ApiClient, map_config: dict, already_added_cars: list[CarName]
 ) -> None:
-    with open(map_config_path, "r", encoding="utf-8") as map_file:
-        map_config = json.load(map_file)
     stop_api = StopApi(api_client)
     new_stops: list[Stop] = list()
 
-    tenant_name: str = map_config["tenant"]
-    tenant_created = create_tenant(api_client, tenant_name)
-    if not tenant_created:
-        print(
-            f"Tenant '{tenant_name}' could not be created. Cannot create entities for map '{map_config_path}'"
-        )
-        return
-    api_client.set_default_header("Cookie", "tenant=" + tenant_name)
     for stop in map_config["stops"]:
         print(f"New stop, name: {stop['name']}")
         new_stops.append(
@@ -135,22 +125,20 @@ def run_queries(
         car_api.create_cars(new_cars)
 
 
-def create_tenant(api_client: ApiClient, tenant_name: str) -> bool:
+def create_tenant(api_client: ApiClient, tenant_name: str) -> str | None:
     tenant_api = TenantApi(api_client)
     try:
-        tenant_api.create_tenants([Tenant(name=tenant_name)])
-        return True
-    except _BadRequestException as e:
         response = tenant_api.get_tenants()
-        tenant_already_exists = any(t.name == tenant_name for t in response)
-        if tenant_already_exists:
+        tenant = next((t for t in response if t.name == tenant_name), None)
+        if tenant is not None:
             print(f"Tenant '{tenant_name}' already exists.")
         else:
-            print(f"Tenant '{tenant_name}' does not exists and could not be created. Error: {e}")
-        return tenant_already_exists
+            tenant = tenant_api.create_tenants([Tenant(name=tenant_name)])[0]
+        cookie_response = tenant_api.set_tenant_cookie_with_http_info(tenant.id)
+        return cookie_response.headers.get("Set-Cookie")
     except Exception as exception:
-        print(f"Could not create tenant '{tenant_name}' due to {exception}")
-        return False
+        print(f"Could not create/set tenant '{tenant_name}' due to {exception}")
+        return None
 
 
 def main() -> None:
@@ -163,22 +151,31 @@ def main() -> None:
             host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
         )
     )
-    
-    if args.delete:
-        if not args.tenant:
-            print("Tenant name must be specified when deleting")
-            return
-        api_client.set_default_header("Cookie", "tenant=" + args.tenant)
-        delete_all(api_client)
-        print("Fleet management deleted")
-        return
 
     args.maps = os.path.join(args.maps, "")
     already_added_cars: list[CarName] = list()
+    already_deleted_tenants: list[str] = list()
     for map_file_path in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file_path}")
         try:
-            run_queries(api_client, map_file_path, already_added_cars)
+            with open(map_file_path, "r", encoding="utf-8") as map_file:
+                map_config = json.load(map_file)
+
+            tenant_name: str = map_config["tenant"]
+            tenant_cookie = create_tenant(api_client, tenant_name)
+            if not tenant_cookie:
+                print(
+                    f"Tenant '{tenant_name}' could not be created. Cannot create entities for map '{map_file_path}'"
+                )
+                return
+            api_client.set_default_header("Cookie", tenant_cookie)
+
+            if args.delete and tenant_name not in already_deleted_tenants:
+                delete_all(api_client)
+                already_deleted_tenants.append(tenant_name)
+                print(f"Entries for tenant {tenant_name} deleted")
+
+            run_queries(api_client, map_config, already_added_cars)
         except Exception as exception:
             print(exception)
             return

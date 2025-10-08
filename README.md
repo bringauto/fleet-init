@@ -10,8 +10,7 @@ Script for initialization of the [BringAuto Fleet Management] database - Script 
 
 - -c or --config=`<file>` - config file (default: config/config.ini)
 - -m or --maps=`<directory>` - directory with input files (default: maps/)
-- -d or --delete - delete every entity in the database beforehand, --tenant has to be set
-- -t or --tenant=`<tenant>` - sets the tenant when deleting entries, only works when deleting entries
+- -d or --delete - delete every entity in the database beforehand
 
 ## Config file
 
