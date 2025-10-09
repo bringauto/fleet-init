@@ -32,13 +32,13 @@ All parameters in `DEFAULT` section are required to let the script work.
 
 Install requirements:
 
-```
+```bash
 pip3 install -r requirements.txt
 ```
 
 Example run:
 
-```
+```bash
 python3 main.py -c config/config.ini -m maps -d
 ```
 
@@ -46,7 +46,7 @@ python3 main.py -c config/config.ini -m maps -d
 
 To run the script in test mode (no requests to the server), use the `-t` or `--test` flag:
 
-```python
+```bash
 python3 main.py -c config/config.ini -m maps -d -t
 ```
 
