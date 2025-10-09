@@ -1,26 +1,19 @@
 #!/usr/bin/env python3
 
 import glob
-import json
 import os
 
 from fleet_management_http_client_python import (  # type: ignore
-    ApiClient,
-    Configuration,
-    StopApi,
     Stop,
     GNSSPosition,
-    RouteApi,
     Route,
     RouteVisualization,
-    PlatformHWApi,
     PlatformHW,
-    CarApi,
     Car,
     MobilePhone,
-    TenantApi,
     Tenant,
 )
+from fleet.query.client import ManagementApiClient
 
 from fleet.models import Map
 from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
@@ -30,8 +23,9 @@ CarName = str
 RouteName = str
 
 
-def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list[CarName]) -> None:
-    stop_api = StopApi(api_client)
+def run_queries(
+    api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
+) -> None:
     new_stops: list[Stop] = list()
 
     for stop in map_config.stops:
@@ -45,9 +39,8 @@ def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list
             )
         )
     print("Sending create stops request")
-    created_stops = stop_api.create_stops(new_stops)
+    created_stops = api_client.create_stops(new_stops)
 
-    route_api = RouteApi(api_client)
     new_routes: list[Route] = list()
     new_visualizations: list[RouteVisualization] = list()
     visualization_stops: dict[RouteName, list[GNSSPosition]] = dict()
@@ -67,7 +60,7 @@ def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list
         print(f"New route, name: {route['name']}")
         new_routes.append(Route(name=route["name"], stopIds=stop_ids))
     print("Sending create routes request")
-    created_routes = route_api.create_routes(new_routes)
+    created_routes = api_client.create_routes(new_routes)
 
     for route in map_config.routes:
         for new_route in created_routes:
@@ -82,13 +75,11 @@ def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list
                 )
                 break
     print("Sending redefine route visualizations request")
-    route_api.redefine_route_visualizations(new_visualizations)
+    api_client.redefine_route_visualizations(new_visualizations)
 
-    platform_api = PlatformHWApi(api_client)
-    car_api = CarApi(api_client)
     new_platforms: list[PlatformHW] = list()
     new_cars: list[Car] = list()
-    for platform in platform_api.get_hws():
+    for platform in api_client.get_hws():
         if platform.name not in already_added_cars:
             already_added_cars.append(platform.name)
     for car in map_config.cars:
@@ -99,7 +90,7 @@ def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list
         new_platforms.append(PlatformHW(name=car["name"]))
     if len(new_platforms) > 0:
         print("Sending create platforms request")
-        created_platforms = platform_api.create_hws(new_platforms)
+        created_platforms = api_client.create_hws(new_platforms)
 
     for car in map_config.cars:
         if car["name"] in already_added_cars:
@@ -119,20 +110,19 @@ def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list
                 already_added_cars.append(car["name"])
     if len(new_cars) > 0:
         print("Sending create cars request")
-        car_api.create_cars(new_cars)
+        api_client.create_cars(new_cars)
 
 
-def create_tenant(api_client: ApiClient, tenant_name: str) -> str | None:
-    tenant_api = TenantApi(api_client)
+def create_tenant(api_client: ManagementApiClient, tenant_name: str) -> str | None:
     try:
-        response = tenant_api.get_tenants()
+        response = api_client.get_tenants()
         tenant = next((t for t in response if t.name == tenant_name), None)
         if tenant is not None:
             print(f"Tenant '{tenant_name}' already exists.")
         else:
-            tenant = tenant_api.create_tenants([Tenant(name=tenant_name)])[0]
-        cookie_response = tenant_api.set_tenant_cookie_with_http_info(tenant.id)
-        return cookie_response.headers.get("Set-Cookie")
+            tenant = api_client.create_tenants([Tenant(name=tenant_name)])[0]
+        cookie_response = api_client.set_tenant_cookie_with_http_info(tenant.id)
+        return cookie_response
     except Exception as exception:
         print(f"Could not create/set tenant '{tenant_name}' due to {exception}")
         return None
@@ -143,10 +133,8 @@ def main() -> None:
     if not file_exists(args.config):
         raise IOError(f"Input config file does not exist: {args.config}")
     config = config_parser_init(args.config)
-    api_client = ApiClient(
-        Configuration(
-            host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
-        )
+    api_client = ManagementApiClient(
+        host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
     )
 
     args.maps = os.path.join(args.maps, "")
