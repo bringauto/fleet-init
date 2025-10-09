@@ -5,7 +5,7 @@ import json
 import os
 
 from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
-from fleet_management_http_client_python import ( # type: ignore
+from fleet_management_http_client_python import (  # type: ignore
     ApiClient,
     Configuration,
     StopApi,
@@ -22,18 +22,13 @@ from fleet_management_http_client_python import ( # type: ignore
     TenantApi,
     Tenant,
 )
-from fleet_management_http_client_python.exceptions import ( # type: ignore
-    BadRequestException as _BadRequestException,
-)
 
 
 CarName = str
 RouteName = str
 
 
-def run_queries(
-    api_client: ApiClient, map_config: dict, already_added_cars: list[CarName]
-) -> None:
+def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: list[CarName]) -> None:
     stop_api = StopApi(api_client)
     new_stops: list[Stop] = list()
 
