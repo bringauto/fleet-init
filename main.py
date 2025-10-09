@@ -133,8 +133,11 @@ def main() -> None:
     if not file_exists(args.config):
         raise IOError(f"Input config file does not exist: {args.config}")
     config = config_parser_init(args.config)
+
     api_client = ManagementApiClient(
-        host=config["DEFAULT"]["Url"], api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]}
+        host=config["DEFAULT"]["Url"],
+        api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]},
+        test=args.test,
     )
 
     args.maps = os.path.join(args.maps, "")

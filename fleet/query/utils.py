@@ -78,6 +78,12 @@ def argument_parser_init() -> argparse.Namespace:
         action="store_true",
         help="Delete all entities from database",
     )
+    parser.add_argument(
+        "-t",
+        "--test",
+        action="store_true",
+        help="Run in test mode (no requests to the server)",
+    )
     return parser.parse_args()
 
 
