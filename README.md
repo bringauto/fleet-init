@@ -44,7 +44,8 @@ python3 main.py -c config/config.ini -m maps -d
 
 ### Testing
 
-To run the script in test mode (no requests to the server), use the `-t` or `--test` flag:
+To run the script in test mode (no requests to the server), use the `-t` or `--test` flag. Note that in test mode, the script
+always simulates accessible server, with no data.
 
 ```bash
 python3 main.py -c config/config.ini -m maps -d -t
