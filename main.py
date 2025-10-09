@@ -13,20 +13,21 @@ from fleet_management_http_client_python import (  # type: ignore
     MobilePhone,
     Tenant,
 )
-from fleet.query.client import ManagementApiClient
 
+from fleet.query.client import ManagementApiClient
 from fleet.models import Map
 from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
 
 
 CarName = str
 RouteName = str
+TenantName = str
 
 
 def run_queries(
     api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
 ) -> None:
-    new_stops: list[Stop] = list()
+    new_stops: list[Stop] = []
 
     for stop in map_config.stops:
         print(f"New stop, name: {stop['name']}")
@@ -41,13 +42,13 @@ def run_queries(
     print("Sending create stops request")
     created_stops = api_client.create_stops(new_stops)
 
-    new_routes: list[Route] = list()
-    new_visualizations: list[RouteVisualization] = list()
-    visualization_stops: dict[RouteName, list[GNSSPosition]] = dict()
+    new_routes: list[Route] = []
+    new_visualizations: list[RouteVisualization] = []
+    visualization_stops: dict[RouteName, list[GNSSPosition]] = {}
     for route in map_config.routes:
         stops = route["stops"]
-        stop_ids: list[int] = list()
-        visualization_stops[route["name"]] = list()
+        stop_ids: list[int] = []
+        visualization_stops[route["name"]] = []
         for stop in stops:
             visualization_stops[route["name"]].append(
                 GNSSPosition(latitude=stop["latitude"], longitude=stop["longitude"])
@@ -77,8 +78,8 @@ def run_queries(
     print("Sending redefine route visualizations request")
     api_client.redefine_route_visualizations(new_visualizations)
 
-    new_platforms: list[PlatformHW] = list()
-    new_cars: list[Car] = list()
+    new_platforms: list[PlatformHW] = []
+    new_cars: list[Car] = []
     for platform in api_client.get_hws():
         if platform.name not in already_added_cars:
             already_added_cars.append(platform.name)
@@ -141,8 +142,8 @@ def main() -> None:
     )
 
     args.maps = os.path.join(args.maps, "")
-    already_added_cars: list[CarName] = list()
-    already_deleted_tenants: list[str] = list()
+    already_added_cars: dict[TenantName, list[CarName]] = {}
+    already_deleted_tenants: list[str] = []
     for map_file_path in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file_path}")
         try:
@@ -163,7 +164,9 @@ def main() -> None:
                 already_deleted_tenants.append(tenant_name)
                 print(f"Entries for tenant {tenant_name} deleted")
 
-            run_queries(api_client, map_config, already_added_cars)
+            if tenant_name not in already_added_cars:
+                already_added_cars[tenant_name] = []
+            run_queries(api_client, map_config, already_added_cars[map_config.tenant])
         except Exception as exception:
             print(exception)
             return
