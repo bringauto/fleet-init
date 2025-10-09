@@ -4,7 +4,6 @@ import glob
 import json
 import os
 
-from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
 from fleet_management_http_client_python import (  # type: ignore
     ApiClient,
     Configuration,
@@ -23,16 +22,19 @@ from fleet_management_http_client_python import (  # type: ignore
     Tenant,
 )
 
+from fleet.models import Map
+from fleet import argument_parser_init, config_parser_init, delete_all, file_exists
+
 
 CarName = str
 RouteName = str
 
 
-def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: list[CarName]) -> None:
+def run_queries(api_client: ApiClient, map_config: Map, already_added_cars: list[CarName]) -> None:
     stop_api = StopApi(api_client)
     new_stops: list[Stop] = list()
 
-    for stop in map_config["stops"]:
+    for stop in map_config.stops:
         print(f"New stop, name: {stop['name']}")
         new_stops.append(
             Stop(
@@ -49,7 +51,7 @@ def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: lis
     new_routes: list[Route] = list()
     new_visualizations: list[RouteVisualization] = list()
     visualization_stops: dict[RouteName, list[GNSSPosition]] = dict()
-    for route in map_config["routes"]:
+    for route in map_config.routes:
         stops = route["stops"]
         stop_ids: list[int] = list()
         visualization_stops[route["name"]] = list()
@@ -67,7 +69,7 @@ def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: lis
     print("Sending create routes request")
     created_routes = route_api.create_routes(new_routes)
 
-    for route in map_config["routes"]:
+    for route in map_config.routes:
         for new_route in created_routes:
             if new_route.name == route["name"]:
                 print(f"New route visualization for route {new_route.name}")
@@ -89,7 +91,7 @@ def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: lis
     for platform in platform_api.get_hws():
         if platform.name not in already_added_cars:
             already_added_cars.append(platform.name)
-    for car in map_config["cars"]:
+    for car in map_config.cars:
         if car["name"] in already_added_cars:
             print(f"Platform with name {car['name']} is already created; skipping")
             continue
@@ -99,7 +101,7 @@ def run_queries(api_client: ApiClient, map_config: dict, already_added_cars: lis
         print("Sending create platforms request")
         created_platforms = platform_api.create_hws(new_platforms)
 
-    for car in map_config["cars"]:
+    for car in map_config.cars:
         if car["name"] in already_added_cars:
             print(f"Car with name {car['name']} is already created; skipping")
             continue
@@ -154,9 +156,9 @@ def main() -> None:
         print(f"\nProcessing file: {map_file_path}")
         try:
             with open(map_file_path, "r", encoding="utf-8") as map_file:
-                map_config = json.load(map_file)
+                map_config = Map.model_validate_json(map_file.read())
 
-            tenant_name: str = map_config["tenant"]
+            tenant_name: str = map_config.tenant
             tenant_cookie = create_tenant(api_client, tenant_name)
             if not tenant_cookie:
                 print(
