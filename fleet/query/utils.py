@@ -76,9 +76,9 @@ def load_script_args() -> ScriptArgs:
     """
 
     args = ScriptArgs(**_argument_parser_init())
-    if not file_exists(args.config):
+    if not os.path.isfile(args.config):
         raise FileNotFoundError(f"Config file '{args.config}' does not exist.")
-    if not is_map_directory(args.maps):
+    if not os.path.isdir(args.maps):
         raise FileNotFoundError(f"Nonexistent map directory: '{args.maps}'.")
     return args
 
@@ -137,24 +137,3 @@ def config_parser_init(filename: str) -> ConfigParser:
     config = ConfigParser()
     config.read(filename)
     return config
-
-
-def file_exists(filename: str) -> bool:
-    """
-    Check if file exists
-
-    Parameters
-    ----------
-    filename : str
-        File to check
-
-    Return
-    ------
-    bool : True if exists otherwise False
-    """
-    return os.path.isfile(filename)
-
-
-def is_map_directory(path: str) -> bool:
-
-    return os.path.isdir(path)
