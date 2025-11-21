@@ -16,6 +16,7 @@ class ScriptArgs(pydantic.BaseModel):
 
 
 def load_map_config(map_config_path: str) -> Map:
+    """Load map configuration from given file path. It is assumed that the file exists."""
     with open(map_config_path, "r", encoding="utf-8") as map_file:
         map_config = map_file.read()
     map_config_obj = Map.model_validate_json(map_config)
@@ -23,6 +24,7 @@ def load_map_config(map_config_path: str) -> Map:
 
 
 def delete_all(api_client: ManagementApiClient) -> None:
+    """Delete all existing entities (cars, routes, ...) from the database."""
     orders = api_client.get_orders()
     for order in orders:
         print(f"Deleting order {order.id}")
@@ -68,11 +70,9 @@ def delete_all(api_client: ManagementApiClient) -> None:
 
 def load_script_args() -> ScriptArgs:
     """
-    Load script inputs from command line arguments
+    Load script arguments from command line and validate config file path and map directory path.
 
-    Return
-    ------
-    argparse.Namespace : object with atributes
+    If either path is invalid, raise FileNotFoundError.
     """
 
     args = ScriptArgs(**_argument_parser_init())
@@ -84,13 +84,6 @@ def load_script_args() -> ScriptArgs:
 
 
 def _argument_parser_init() -> dict:
-    """
-    Initialize argument parser
-
-    Return
-    ------
-    argparse.Namespace : object with atributes
-    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-c",
@@ -122,18 +115,7 @@ def _argument_parser_init() -> dict:
 
 
 def config_parser_init(filename: str) -> ConfigParser:
-    """
-    Initialize config parser
-
-    Parameters
-    ----------
-    filename : str
-        Input config file
-
-    Return
-    ------
-    ConfigParser : config parser
-    """
+    """Initialize and return ConfigParser object from given filename to be used in the script."""
     config = ConfigParser()
     config.read(filename)
     return config
