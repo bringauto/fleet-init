@@ -33,7 +33,10 @@ def _make_red(message: str) -> str:
 
 
 def _construct_duplicate_error_msg(
-    api_client: ManagementApiClient, exception: BadRequestException, entity_type: str
+    api_client: ManagementApiClient,
+    map_config: Map,
+    exception: BadRequestException,
+    entity_type: str,
 ) -> str:
     match = re.search(r"Key \(tenant_id, name\)=\((\d+), ([^)]+)\) already exists", str(exception))
     if match:
@@ -45,6 +48,10 @@ def _construct_duplicate_error_msg(
         except Exception:
             tenant_name = ""
         tenant = "Tenant " + f"'{tenant_name}'" if tenant_name else f"with ID={tenant_id}"
+        if tenant_name:
+            assert (
+                tenant_name == map_config.tenant
+            ), f"Mismatched tenant names between the map config and the request to the API: '{tenant_name}' != '{map_config.tenant}'."
         return _make_red(
             f"[ERROR] {tenant} already has {entity_type.lower()} with name '{name}' created."
         )
@@ -184,6 +191,6 @@ def run_queries(
         _create_cars(api_client, map_config, already_added_cars, platforms)
 
     except BadRequestException as e:
-        msg = _construct_duplicate_error_msg(api_client, e, entity_type)
+        msg = _construct_duplicate_error_msg(api_client, map_config, e, entity_type)
         print(msg or e)
         return
