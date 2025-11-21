@@ -2,46 +2,51 @@ import argparse
 from os.path import isfile
 from configparser import ConfigParser
 
-from fleet_management_http_client_python import (
-    ApiClient,
-    OrderApi,
-    CarApi,
-    PlatformHWApi,
-    RouteApi,
-    StopApi,
-)
+from fleet.query.client import ManagementApiClient
 
 
-def delete_all(api_client: ApiClient) -> None:
-    order_api = OrderApi(api_client)
-    orders = order_api.get_orders()
+def delete_all(api_client: ManagementApiClient) -> None:
+    orders = api_client.get_orders()
     for order in orders:
         print(f"Deleting order {order.id}")
-        order_api.delete_order(car_id=order.car_id, order_id=order.id)
+        try:
+            api_client.delete_order(car_id=order.car_id, order_id=order.id)
+        except Exception:
+            print(f"Failed to delete order {order.id}, possibly belongs to a different tenant.")
 
-    car_api = CarApi(api_client)
-    cars = car_api.get_cars()
+    cars = api_client.get_cars()
     for car in cars:
         print(f"Deleting car {car.id}, name: {car.name}")
-        car_api.delete_car(car_id=car.id)
+        try:
+            api_client.delete_car(car_id=car.id)
+        except Exception:
+            print(f"Failed to delete car {car.id}, possibly belongs to a different tenant.")
 
-    platform_api = PlatformHWApi(api_client)
-    platforms = platform_api.get_hws()
+    platforms = api_client.get_hws()
     for platform in platforms:
         print(f"Deleting platform {platform.id}, name: {platform.name}")
-        platform_api.delete_hw(platform_hw_id=platform.id)
+        try:
+            api_client.delete_hw(platform_hw_id=platform.id)
+        except Exception:
+            print(
+                f"Failed to delete platform {platform.id}, possibly belongs to a different tenant."
+            )
 
-    route_api = RouteApi(api_client)
-    routes = route_api.get_routes()
+    routes = api_client.get_routes()
     for route in routes:
         print(f"Deleting route {route.id}, name: {route.name}")
-        route_api.delete_route(route_id=route.id)
+        try:
+            api_client.delete_route(route_id=route.id)
+        except Exception:
+            print(f"Failed to delete route {route.id}, possibly belongs to a different tenant.")
 
-    stop_api = StopApi(api_client)
-    stops = stop_api.get_stops()
+    stops = api_client.get_stops()
     for stop in stops:
         print(f"Deleting stop {stop.id}, name: {stop.name}")
-        stop_api.delete_stop(stop_id=stop.id)
+        try:
+            api_client.delete_stop(stop_id=stop.id)
+        except Exception:
+            print(f"Failed to delete stop {stop.id}, possibly belongs to a different tenant.")
 
 
 def argument_parser_init() -> argparse.Namespace:
@@ -68,7 +73,16 @@ def argument_parser_init() -> argparse.Namespace:
         default="maps/",
     )
     parser.add_argument(
-        "-d", "--delete", action="store_true", help="Delete all entities from database"
+        "-d",
+        "--delete",
+        action="store_true",
+        help="Delete all entities from database",
+    )
+    parser.add_argument(
+        "-t",
+        "--test",
+        action="store_true",
+        help="Run in test mode (no requests to the server)",
     )
     return parser.parse_args()
 
