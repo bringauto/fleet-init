@@ -46,6 +46,7 @@ def main() -> None:
 
             if tenant_name not in already_added_cars:
                 already_added_cars[tenant_name] = []
+
             run_queries(api_client, map_config, already_added_cars[map_config.tenant])
 
         except Exception as exception:

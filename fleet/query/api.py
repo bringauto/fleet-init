@@ -1,3 +1,5 @@
+import re
+
 from fleet_management_http_client_python import (  # type: ignore
     Stop,
     GNSSPosition,
@@ -8,6 +10,7 @@ from fleet_management_http_client_python import (  # type: ignore
     MobilePhone,
     Tenant,
 )
+from fleet_management_http_client_python.exceptions import BadRequestException  # type: ignore
 from fleet.query.client import ManagementApiClient
 from fleet.models import Map, CarName, RouteName
 
@@ -25,13 +28,31 @@ def get_tenant_cookie(api_client: ManagementApiClient, tenant_name: str) -> str 
         return None
 
 
-def run_queries(
-    api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
-) -> None:
+def _make_red(message: str) -> str:
+    return f"\033[031m{message}\033[0m"
 
-    # Create stops
+
+def _construct_duplicate_error_msg(
+    api_client: ManagementApiClient, exception: BadRequestException, entity_type: str
+) -> str:
+    match = re.search(r"Key \(tenant_id, name\)=\((\d+), ([^)]+)\) already exists", str(exception))
+    if match:
+        tenant_id, name = match.groups()
+        try:
+            tenant_name = next(
+                (t.name for t in api_client.get_tenants() if t.id == int(tenant_id)), ""
+            )
+        except Exception:
+            tenant_name = ""
+        tenant = "Tenant " + f"'{tenant_name}'" if tenant_name else f"with ID={tenant_id}"
+        return _make_red(
+            f"[ERROR] {tenant} already has {entity_type.lower()} with name '{name}' created."
+        )
+    return ""
+
+
+def _create_stops(api_client: ManagementApiClient, map_config: Map) -> list[Stop]:
     new_stops: list[Stop] = []
-
     for stop in map_config.stops:
         print(f"New stop, name: {stop.name}")
         new_stops.append(
@@ -43,11 +64,13 @@ def run_queries(
             )
         )
     print("Sending create stops request")
-    created_stops = api_client.create_stops(new_stops)
+    return api_client.create_stops(new_stops)
 
-    # Create routes
+
+def _create_routes(
+    api_client: ManagementApiClient, map_config: Map, stops: list[Stop]
+) -> tuple[list[Route], dict[RouteName, list[GNSSPosition]]]:
     new_routes: list[Route] = []
-    new_visualizations: list[RouteVisualization] = []
     visualization_stops: dict[RouteName, list[GNSSPosition]] = {}
     for route in map_config.routes:
         stations = route.stops
@@ -59,15 +82,22 @@ def run_queries(
             )
             if station.stationName is None:
                 continue
-            for created_stop in created_stops:
+            for created_stop in stops:
                 if created_stop.name == station.stationName:
                     stop_ids.append(created_stop.id)
         print(f"New route, name: {route.name}")
         new_routes.append(Route(name=route.name, stopIds=stop_ids))
     print("Sending create routes request")
-    created_routes = api_client.create_routes(new_routes)
+    return api_client.create_routes(new_routes), visualization_stops
 
-    # Redefine route visualizations
+
+def _create_route_visualizations(
+    api_client: ManagementApiClient,
+    map_config: Map,
+    created_routes: list[Route],
+    visualization_stops: dict[RouteName, list[GNSSPosition]],
+) -> None:
+    new_visualizations: list[RouteVisualization] = []
     for route in map_config.routes:
         for new_route in created_routes:
             if new_route.name == route.name:
@@ -83,32 +113,45 @@ def run_queries(
     print("Sending redefine route visualizations request")
     api_client.redefine_route_visualizations(new_visualizations)
 
+
+def _create_platform_hws(
+    api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
+) -> list[PlatformHW]:
     # Create platforms and cars
     new_platforms: list[PlatformHW] = []
-    new_cars: list[Car] = []
     for platform in api_client.get_hws():
         if platform.name not in already_added_cars:
             already_added_cars.append(platform.name)
+    return new_platforms
+
+
+def _create_cars(
+    api_client: ManagementApiClient,
+    map_config: Map,
+    already_added_cars: list[CarName],
+    platforms: list[PlatformHW],
+) -> None:
+    new_cars: list[Car] = []
     for car in map_config.cars:
         if car.name in already_added_cars:
             print(f"Platform with name {car.name} is already created; skipping")
             continue
         print(f"New platform hw, name: {car.name}")
-        new_platforms.append(PlatformHW(name=car.name))
-    if len(new_platforms) > 0:
+        platforms.append(PlatformHW(name=car.name))
+    if len(platforms) > 0:
         print("Sending create platforms request")
-        created_platforms = api_client.create_hws(new_platforms)
+        platforms = api_client.create_hws(platforms)
 
     for car in map_config.cars:
         if car.name in already_added_cars:
             print(f"Car with name {car.name} is already created; skipping")
             continue
-        for new_platform in created_platforms:
-            if new_platform.name == car.name:
+        for platform in platforms:
+            if platform.name == car.name:
                 print(f"Creating car, name: {car.name}")
                 new_cars.append(
                     Car(
-                        platformHwId=new_platform.id,
+                        platformHwId=platform.id,
                         name=car.name,
                         carAdminPhone=MobilePhone(phone=car.adminPhone),
                         underTest=car.underTest,
@@ -118,3 +161,29 @@ def run_queries(
     if len(new_cars) > 0:
         print("Sending create cars request")
         api_client.create_cars(new_cars)
+
+
+def run_queries(
+    api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
+) -> None:
+
+    try:
+        entity_type = "stop"
+        stops = _create_stops(api_client, map_config)
+
+        entity_type = "route"
+        routes, visualization_stops = _create_routes(api_client, map_config, stops)
+
+        entity_type = "route visualization"
+        _create_route_visualizations(api_client, map_config, routes, visualization_stops)
+
+        entity_type = "platform HW"
+        platforms = _create_platform_hws(api_client, map_config, already_added_cars)
+
+        entity_type = "car"
+        _create_cars(api_client, map_config, already_added_cars, platforms)
+
+    except BadRequestException as e:
+        msg = _construct_duplicate_error_msg(api_client, e, entity_type)
+        print(msg or e)
+        return
