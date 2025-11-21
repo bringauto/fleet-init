@@ -1,3 +1,5 @@
+from typing import Optional, Protocol
+
 from fleet_management_http_client_python import (  # type: ignore
     Configuration,
     ApiClient,
@@ -17,6 +19,11 @@ from fleet_management_http_client_python import (  # type: ignore
 )
 
 
+class Entity(Protocol):
+
+    id: Optional[int]
+
+
 class ManagementApiClient:
     """Wrapper for HTTP Client for simpler usage and testability"""
 
@@ -34,7 +41,7 @@ class ManagementApiClient:
         self.tenant_api = TenantApi(api_client)
         self.order_api = OrderApi(api_client)
 
-    def _entities_with_set_id(self, entities: list) -> list:
+    def _entities_with_set_id(self, entities: list[Entity]) -> list:
         for k, entity in enumerate(entities):
             entity.id = k
         return entities

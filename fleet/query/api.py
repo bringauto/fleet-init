@@ -29,6 +29,7 @@ def run_queries(
     api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
 ) -> None:
 
+    # Create stops
     new_stops: list[Stop] = []
 
     for stop in map_config.stops:
@@ -44,6 +45,7 @@ def run_queries(
     print("Sending create stops request")
     created_stops = api_client.create_stops(new_stops)
 
+    # Create routes
     new_routes: list[Route] = []
     new_visualizations: list[RouteVisualization] = []
     visualization_stops: dict[RouteName, list[GNSSPosition]] = {}
@@ -65,6 +67,7 @@ def run_queries(
     print("Sending create routes request")
     created_routes = api_client.create_routes(new_routes)
 
+    # Redefine route visualizations
     for route in map_config.routes:
         for new_route in created_routes:
             if new_route.name == route.name:
@@ -80,6 +83,7 @@ def run_queries(
     print("Sending redefine route visualizations request")
     api_client.redefine_route_visualizations(new_visualizations)
 
+    # Create platforms and cars
     new_platforms: list[PlatformHW] = []
     new_cars: list[Car] = []
     for platform in api_client.get_hws():
