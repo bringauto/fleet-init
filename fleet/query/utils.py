@@ -1,7 +1,7 @@
 import argparse
 import os
-
 from configparser import ConfigParser
+
 import pydantic
 
 from fleet.query.client import ManagementApiClient
