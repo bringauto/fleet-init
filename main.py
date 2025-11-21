@@ -115,16 +115,14 @@ def run_queries(
         api_client.create_cars(new_cars)
 
 
-def create_tenant(api_client: ManagementApiClient, tenant_name: str) -> str | None:
+def get_tenant_cookie(api_client: ManagementApiClient, tenant_name: str) -> str | None:
     try:
         response = api_client.get_tenants()
         tenant = next((t for t in response if t.name == tenant_name), None)
-        if tenant is not None:
-            print(f"Tenant '{tenant_name}' already exists.")
-        else:
+        if tenant is None:
+            print(f"Tenant '{tenant_name}' does not exist, creating it")
             tenant = api_client.create_tenants([Tenant(name=tenant_name)])[0]
-        cookie_response = api_client.set_tenant_cookie_with_http_info(tenant.id)
-        return cookie_response
+        return api_client.set_tenant_cookie_with_http_info(tenant.id)
     except Exception as exception:
         print(f"Could not create/set tenant '{tenant_name}' due to {exception}")
         return None
@@ -152,14 +150,14 @@ def main() -> None:
         try:
             tenant_name: str = map_config.tenant
             print(f"Using tenant: {tenant_name}")
-            tenant_cookie = create_tenant(api_client, tenant_name)
+            tenant_cookie = get_tenant_cookie(api_client, tenant_name)
             if not tenant_cookie:
                 print(
-                    f"Tenant '{tenant_name}' could not be created. Cannot create entities for map '{map_file_path}'"
+                    f"Tenant '{tenant_name}' does not exist and could not be created. "
+                    f"Cannot create entities for map '{map_file_path}'"
                 )
                 return
             api_client.set_default_header("Cookie", tenant_cookie)
-
             if args.delete and tenant_name not in already_deleted_tenants:
                 delete_all(api_client)
                 already_deleted_tenants.append(tenant_name)
@@ -168,9 +166,11 @@ def main() -> None:
             if tenant_name not in already_added_cars:
                 already_added_cars[tenant_name] = []
             run_queries(api_client, map_config, already_added_cars[map_config.tenant])
+
         except Exception as exception:
-            print(f"Error: {exception}")
+            print(f"Error processing map file '{map_file_path}': {exception}")
             return
+
     print("\nFleet management updated")
 
 
