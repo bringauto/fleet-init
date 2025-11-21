@@ -1,14 +1,3 @@
+__all__ = ("_argument_parser_init", "config_parser_init", "delete_all", "file_exists")
 
-__all__ = (
-    'argument_parser_init',
-    'config_parser_init',
-    'delete_all',
-    'file_exists'
-)
-
-from .query.utils import (
-    argument_parser_init,
-    config_parser_init,
-    delete_all,
-    file_exists
-)
+from .query.utils import _argument_parser_init, config_parser_init, delete_all, file_exists

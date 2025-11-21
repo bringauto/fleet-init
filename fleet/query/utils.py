@@ -1,8 +1,17 @@
 import argparse
-from os.path import isfile
+import os
+
 from configparser import ConfigParser
+import pydantic
 
 from fleet.query.client import ManagementApiClient
+
+
+class ScriptArgs(pydantic.BaseModel):
+    config: str
+    maps: str
+    delete: bool
+    test: bool
 
 
 def delete_all(api_client: ManagementApiClient) -> None:
@@ -49,7 +58,23 @@ def delete_all(api_client: ManagementApiClient) -> None:
             print(f"Failed to delete stop {stop.id}, possibly belongs to a different tenant.")
 
 
-def argument_parser_init() -> argparse.Namespace:
+def load_script_args() -> ScriptArgs:
+    """
+    Load script inputs from command line arguments
+
+    Return
+    ------
+    argparse.Namespace : object with atributes
+    """
+    args = ScriptArgs(**_argument_parser_init())
+    if not file_exists(args.config):
+        raise FileNotFoundError(f"Config file '{args.config}' does not exist.")
+    if not is_map_directory(args.maps):
+        raise FileNotFoundError(f"Nonexistent map directory: '{args.maps}'.")
+    return args
+
+
+def _argument_parser_init() -> dict:
     """
     Initialize argument parser
 
@@ -84,7 +109,7 @@ def argument_parser_init() -> argparse.Namespace:
         action="store_true",
         help="Run in test mode (no requests to the server)",
     )
-    return parser.parse_args()
+    return parser.parse_args().__dict__
 
 
 def config_parser_init(filename: str) -> ConfigParser:
@@ -118,4 +143,9 @@ def file_exists(filename: str) -> bool:
     ------
     bool : True if exists otherwise False
     """
-    return isfile(filename)
+    return os.path.isfile(filename)
+
+
+def is_map_directory(path: str) -> bool:
+
+    return os.path.isdir(path)
