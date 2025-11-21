@@ -16,7 +16,7 @@ from fleet_management_http_client_python import (  # type: ignore
 
 from fleet.query.client import ManagementApiClient
 from fleet.models import Map
-from fleet.query.utils import load_script_args, delete_all, config_parser_init
+from fleet.query.utils import load_script_args, delete_all, config_parser_init, load_map_config
 
 
 CarName = str
@@ -27,6 +27,7 @@ TenantName = str
 def run_queries(
     api_client: ManagementApiClient, map_config: Map, already_added_cars: list[CarName]
 ) -> None:
+
     new_stops: list[Stop] = []
 
     for stop in map_config.stops:
@@ -138,15 +139,13 @@ def main() -> None:
         api_key={"APIKeyAuth": config["DEFAULT"]["ApiKey"]},
         test=args.test,
     )
-
     args.maps = os.path.join(args.maps, "")
     already_added_cars: dict[TenantName, list[CarName]] = {}
     already_deleted_tenants: list[str] = []
     for map_file_path in glob.iglob(f"{args.maps}*"):
         print(f"\nProcessing file: {map_file_path}")
         try:
-            with open(map_file_path, "r", encoding="utf-8") as map_file:
-                map_config = Map.model_validate_json(map_file.read())
+            map_config = load_map_config(map_file_path)
         except Exception as exception:
             print(f"Error reading map file '{map_file_path}': {exception}")
             return

@@ -5,6 +5,7 @@ from configparser import ConfigParser
 import pydantic
 
 from fleet.query.client import ManagementApiClient
+from fleet.models import Map
 
 
 class ScriptArgs(pydantic.BaseModel):
@@ -12,6 +13,13 @@ class ScriptArgs(pydantic.BaseModel):
     maps: str
     delete: bool
     test: bool
+
+
+def load_map_config(map_config_path: str) -> Map:
+    with open(map_config_path, "r", encoding="utf-8") as map_file:
+        map_config = map_file.read()
+    map_config_obj = Map.model_validate_json(map_config)
+    return map_config_obj
 
 
 def delete_all(api_client: ManagementApiClient) -> None:
@@ -66,6 +74,7 @@ def load_script_args() -> ScriptArgs:
     ------
     argparse.Namespace : object with atributes
     """
+
     args = ScriptArgs(**_argument_parser_init())
     if not file_exists(args.config):
         raise FileNotFoundError(f"Config file '{args.config}' does not exist.")
