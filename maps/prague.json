@@ -1,99 +1,105 @@
 {
-    "tenant": "Prague",
-    "admin": {
-        "email": "test@bringauto.com",
-        "username": "Test",
-        "password": "Admin1"
+  "tenant": "Prague",
+  "admin": {
+    "email": "test@bringauto.com",
+    "username": "Test",
+    "password": "Admin1"
+  },
+  "users": [
+    {
+      "email": "testdriver@bringauto.com",
+      "username": "TestDriver",
+      "password": "Admin1",
+      "role": "Driver"
     },
-    "users": [
+    {
+      "email": "testpriv@bringauto.com",
+      "username": "TestPriv",
+      "password": "Admin1",
+      "role": "Privileged"
+    }
+  ],
+  "cars": [
+    {
+      "name": "BringAuto Virtual",
+      "adminPhone": "+123",
+      "underTest": false,
+      "hwId": ""
+    }
+  ],
+  "orders": [],
+  "stops": [
+    {
+      "name": "TestStop",
+      "contactPhone": "123",
+      "latitude": 51.50423320901,
+      "longitude": -0.11283786178
+    },
+    {
+      "name": "Národní divadlo",
+      "contactPhone": "123",
+      "latitude": 50.082452,
+      "longitude": 14.413209
+    },
+    {
+      "name": "Karlovy lázně",
+      "contactPhone": "123",
+      "latitude": 50.08443,
+      "longitude": 14.41346
+    },
+    {
+      "name": "Staroměstská",
+      "contactPhone": "123",
+      "latitude": 50.088199,
+      "longitude": 14.415396
+    }
+  ],
+  "routes": [
+    {
+      "name": "Prague",
+      "color": "#208BF0",
+      "stops": [
         {
-            "email": "testdriver@bringauto.com",
-            "username": "TestDriver",
-            "password": "Admin1",
-            "role": "Driver"
+          "latitude": 50.082452,
+          "longitude": 14.413209,
+          "stationName": "Národní divadlo"
         },
         {
-            "email": "testpriv@bringauto.com",
-            "username": "TestPriv",
-            "password": "Admin1",
-            "role": "Privileged"
-        }
-    ],
-    "cars": [
-        {
-            "name": "BringAuto Virtual",
-            "adminPhone": "+123",
-            "underTest": false,
-            "hwId": ""
-        }
-    ],
-    "orders": [],
-    "stops": [
-        {
-            "name": "Národní divadlo",
-            "contactPhone": "123",
-            "latitude": 50.082452,
-            "longitude": 14.413209
+          "latitude": 50.08443,
+          "longitude": 14.41346,
+          "stationName": "Karlovy lázně"
         },
         {
-            "name": "Karlovy lázně",
-            "contactPhone": "123",
-            "latitude": 50.08443,
-            "longitude": 14.41346
+          "latitude": 50.087263,
+          "longitude": 14.415116,
+          "stationName": null
         },
         {
-            "name": "Staroměstská",
-            "contactPhone": "123",
-            "latitude": 50.088199,
-            "longitude": 14.415396
-        }
-    ],
-    "routes": [
+          "latitude": 50.088199,
+          "longitude": 14.415396,
+          "stationName": "Staroměstská"
+        },
         {
-            "name": "Prague",
-            "color": "#208BF0",
-            "stops": [
-                {
-                    "latitude": 50.082452,
-                    "longitude": 14.413209,
-                    "stationName": "Národní divadlo"
-                },
-                {
-                    "latitude": 50.08443,
-                    "longitude": 14.41346,
-                    "stationName": "Karlovy lázně"
-                },
-                {
-                    "latitude": 50.087263,
-                    "longitude": 14.415116,
-                    "stationName": null
-                },
-                {
-                    "latitude": 50.088199,
-                    "longitude": 14.415396,
-                    "stationName": "Staroměstská"
-                },
-                {
-                    "latitude": 50.087264,
-                    "longitude": 14.41505,
-                    "stationName": null
-                },
-                {
-                    "latitude": 50.08443,
-                    "longitude": 14.41346,
-                    "stationName": null
-                },
-                {
-                    "latitude": 50.083468,
-                    "longitude": 14.41323,
-                    "stationName": null
-                },
-                {
-                    "latitude": 50.082452,
-                    "longitude": 14.413209,
-                    "stationName": null
-                }
-            ]
+          "latitude": 50.087264,
+          "longitude": 14.41505,
+          "stationName": null
+        },
+        {
+          "latitude": 50.08443,
+          "longitude": 14.41346,
+          "stationName": null
+        },
+        {
+          "latitude": 50.083468,
+          "longitude": 14.41323,
+          "stationName": null
+        },
+        {
+          "latitude": 50.082452,
+          "longitude": 14.413209,
+          "stationName": null
         }
-    ]
+      ]
+    }
+  ]
 }

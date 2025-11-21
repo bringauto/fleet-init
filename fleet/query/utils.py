@@ -1,11 +1,30 @@
 import argparse
-from os.path import isfile
+import os
 from configparser import ConfigParser
 
+import pydantic
+
 from fleet.query.client import ManagementApiClient
+from fleet.models import Map
+
+
+class ScriptArgs(pydantic.BaseModel):
+    config: str
+    maps: str
+    delete: bool
+    test: bool
+
+
+def load_map_config(map_config_path: str) -> Map:
+    """Load map configuration from given file path. It is assumed that the file exists."""
+    with open(map_config_path, "r", encoding="utf-8") as map_file:
+        map_config = map_file.read()
+    map_config_obj = Map.model_validate_json(map_config)
+    return map_config_obj
 
 
 def delete_all(api_client: ManagementApiClient) -> None:
+    """Delete all existing entities (cars, routes, ...) from the database."""
     orders = api_client.get_orders()
     for order in orders:
         print(f"Deleting order {order.id}")
@@ -49,14 +68,22 @@ def delete_all(api_client: ManagementApiClient) -> None:
             print(f"Failed to delete stop {stop.id}, possibly belongs to a different tenant.")
 
 
-def argument_parser_init() -> argparse.Namespace:
+def load_script_args() -> ScriptArgs:
     """
-    Initialize argument parser
+    Load script arguments from command line and validate config file path and map directory path.
 
-    Return
-    ------
-    argparse.Namespace : object with atributes
+    If either path is invalid, raise FileNotFoundError.
     """
+
+    args = ScriptArgs(**_argument_parser_init())
+    if not os.path.isfile(args.config):
+        raise FileNotFoundError(f"Config file '{args.config}' does not exist.")
+    if not os.path.isdir(args.maps):
+        raise FileNotFoundError(f"Nonexistent map directory: '{args.maps}'.")
+    return args
+
+
+def _argument_parser_init() -> dict:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-c",
@@ -84,38 +111,11 @@ def argument_parser_init() -> argparse.Namespace:
         action="store_true",
         help="Run in test mode (no requests to the server)",
     )
-    return parser.parse_args()
+    return parser.parse_args().__dict__
 
 
 def config_parser_init(filename: str) -> ConfigParser:
-    """
-    Initialize config parser
-
-    Parameters
-    ----------
-    filename : str
-        Input config file
-
-    Return
-    ------
-    ConfigParser : config parser
-    """
+    """Initialize and return ConfigParser object from given filename to be used in the script."""
     config = ConfigParser()
     config.read(filename)
     return config
-
-
-def file_exists(filename: str) -> bool:
-    """
-    Check if file exists
-
-    Parameters
-    ----------
-    filename : str
-        File to check
-
-    Return
-    ------
-    bool : True if exists otherwise False
-    """
-    return isfile(filename)

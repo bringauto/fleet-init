@@ -36,6 +36,12 @@
   "orders": [],
   "stops": [
     {
+      "name": "TestStop",
+      "contactPhone": "123",
+      "latitude": 51.50423320901,
+      "longitude": -0.11283786178
+    },
+    {
       "name": "London Waterloo",
       "contactPhone": "123",
       "latitude": 51.50423320901,
@@ -89,7 +95,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5007220,
+          "latitude": 51.500722,
           "longitude": -0.1160216,
           "stationName": null
         },
@@ -114,7 +120,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5003630,
+          "latitude": 51.500363,
           "longitude": -0.1151097,
           "stationName": null
         },
@@ -130,7 +136,7 @@
         },
         {
           "latitude": 51.5001409,
-          "longitude": -0.1147610,
+          "longitude": -0.114761,
           "stationName": null
         },
         {
@@ -155,11 +161,11 @@
         },
         {
           "latitude": 51.4996985,
-          "longitude": -0.1140690,
+          "longitude": -0.114069,
           "stationName": null
         },
         {
-          "latitude": 51.4996350,
+          "latitude": 51.499635,
           "longitude": -0.1139322,
           "stationName": null
         },
@@ -169,7 +175,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.4994530,
+          "latitude": 51.499453,
           "longitude": -0.1135728,
           "stationName": null
         },
@@ -195,7 +201,7 @@
         },
         {
           "latitude": 51.4989254,
-          "longitude": -0.1125830,
+          "longitude": -0.112583,
           "stationName": null
         },
         {
@@ -209,7 +215,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.4990940,
+          "latitude": 51.499094,
           "longitude": -0.1123014,
           "stationName": null
         },
@@ -225,7 +231,7 @@
         },
         {
           "latitude": 51.4994271,
-          "longitude": -0.1119460,
+          "longitude": -0.111946,
           "stationName": null
         },
         {
@@ -269,7 +275,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5002010,
+          "latitude": 51.500201,
           "longitude": -0.1120332,
           "stationName": null
         },
@@ -315,7 +321,7 @@
         },
         {
           "latitude": 51.5005943,
-          "longitude": -0.1108570,
+          "longitude": -0.110857,
           "stationName": null
         },
         {
@@ -329,7 +335,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5008990,
+          "latitude": 51.500899,
           "longitude": -0.1106572,
           "stationName": null
         },
@@ -339,7 +345,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5011110,
+          "latitude": 51.501111,
           "longitude": -0.1105741,
           "stationName": null
         },
@@ -394,7 +400,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5020560,
+          "latitude": 51.502056,
           "longitude": -0.1102147,
           "stationName": null
         },
@@ -439,13 +445,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5024860,
+          "latitude": 51.502486,
           "longitude": -0.1102468,
           "stationName": null
         },
         {
           "latitude": 51.5025736,
-          "longitude": -0.1103380,
+          "longitude": -0.110338,
           "stationName": null
         },
         {
@@ -500,7 +506,7 @@
         },
         {
           "latitude": 51.5034435,
-          "longitude": -0.1113600,
+          "longitude": -0.11136,
           "stationName": null
         },
         {
@@ -515,7 +521,7 @@
         },
         {
           "latitude": 51.5036622,
-          "longitude": -0.1116040,
+          "longitude": -0.111604,
           "stationName": null
         },
         {
@@ -534,7 +540,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5039360,
+          "latitude": 51.503936,
           "longitude": -0.1120332,
           "stationName": null
         },
@@ -549,12 +555,12 @@
           "stationName": null
         },
         {
-          "latitude": 51.5040880,
+          "latitude": 51.504088,
           "longitude": -0.1124302,
           "stationName": null
         },
         {
-          "latitude": 51.5041130,
+          "latitude": 51.504113,
           "longitude": -0.1124999,
           "stationName": null
         },
@@ -575,7 +581,7 @@
         },
         {
           "latitude": 51.5043033,
-          "longitude": -0.1132160,
+          "longitude": -0.113216,
           "stationName": null
         },
         {
@@ -595,12 +601,12 @@
         },
         {
           "latitude": 51.5043801,
-          "longitude": -0.1136720,
+          "longitude": -0.113672,
           "stationName": null
         },
         {
           "latitude": 51.5044018,
-          "longitude": -0.1137270,
+          "longitude": -0.113727,
           "stationName": null
         },
         {
@@ -619,8 +625,8 @@
           "stationName": null
         },
         {
-          "latitude": 51.5045170,
-          "longitude": -0.1139510,
+          "latitude": 51.504517,
+          "longitude": -0.113951,
           "stationName": null
         },
         {
@@ -634,7 +640,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5046130,
+          "latitude": 51.504613,
           "longitude": -0.1140744,
           "stationName": null
         },
@@ -664,7 +670,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5049770,
+          "latitude": 51.504977,
           "longitude": -0.1140998,
           "stationName": null
         },
@@ -710,7 +716,7 @@
         },
         {
           "latitude": 51.5057141,
-          "longitude": -0.1144070,
+          "longitude": -0.114407,
           "stationName": null
         },
         {
@@ -750,7 +756,7 @@
         },
         {
           "latitude": 51.5063051,
-          "longitude": -0.1149380,
+          "longitude": -0.114938,
           "stationName": null
         },
         {
@@ -759,7 +765,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5064370,
+          "latitude": 51.506437,
           "longitude": -0.1150601,
           "stationName": null
         },
@@ -769,7 +775,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5066290,
+          "latitude": 51.506629,
           "longitude": -0.1152304,
           "stationName": null
         },
@@ -800,7 +806,7 @@
         },
         {
           "latitude": 51.5071615,
-          "longitude": -0.1156810,
+          "longitude": -0.115681,
           "stationName": null
         },
         {
@@ -874,7 +880,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5082350,
+          "latitude": 51.508235,
           "longitude": -0.1166224,
           "stationName": null
         },
@@ -889,7 +895,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5084470,
+          "latitude": 51.508447,
           "longitude": -0.1168115,
           "stationName": null
         },
@@ -904,7 +910,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5086540,
+          "latitude": 51.508654,
           "longitude": -0.1170114,
           "stationName": null
         },
@@ -944,7 +950,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5092500,
+          "latitude": 51.50925,
           "longitude": -0.1175237,
           "stationName": null
         },
@@ -1000,7 +1006,7 @@
         },
         {
           "latitude": 51.5101038,
-          "longitude": -0.1183230,
+          "longitude": -0.118323,
           "stationName": null
         },
         {
@@ -1064,7 +1070,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5111730,
+          "latitude": 51.511173,
           "longitude": -0.1191625,
           "stationName": null
         },
@@ -1134,7 +1140,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5107340,
+          "latitude": 51.510734,
           "longitude": -0.1206726,
           "stationName": null
         },
@@ -1154,7 +1160,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5105520,
+          "latitude": 51.510552,
           "longitude": -0.1211339,
           "stationName": null
         },
@@ -1174,7 +1180,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5103200,
+          "latitude": 51.51032,
           "longitude": -0.1217186,
           "stationName": null
         },
@@ -1189,8 +1195,8 @@
           "stationName": null
         },
         {
-          "latitude": 51.5101330,
-          "longitude": -0.1221800,
+          "latitude": 51.510133,
+          "longitude": -0.12218,
           "stationName": null
         },
         {
@@ -1224,7 +1230,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5097090,
+          "latitude": 51.509709,
           "longitude": -0.1231992,
           "stationName": null
         },
@@ -1274,7 +1280,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5090730,
+          "latitude": 51.509073,
           "longitude": -0.1244867,
           "stationName": null
         },
@@ -1315,12 +1321,12 @@
         },
         {
           "latitude": 51.5085789,
-          "longitude": -0.1254040,
+          "longitude": -0.125404,
           "stationName": null
         },
         {
           "latitude": 51.5084703,
-          "longitude": -0.1255730,
+          "longitude": -0.125573,
           "stationName": "Cross Station"
         },
         {
@@ -1344,7 +1350,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5080780,
+          "latitude": 51.508078,
           "longitude": -0.1262999,
           "stationName": null
         },
@@ -1370,7 +1376,7 @@
         },
         {
           "latitude": 51.5076941,
-          "longitude": -0.1270080,
+          "longitude": -0.127008,
           "stationName": null
         },
         {
@@ -1384,13 +1390,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5074770,
+          "latitude": 51.507477,
           "longitude": -0.1272655,
           "stationName": null
         },
         {
           "latitude": 51.5073619,
-          "longitude": -0.1273030,
+          "longitude": -0.127303,
           "stationName": null
         },
         {
@@ -1410,7 +1416,7 @@
         },
         {
           "latitude": 51.5069729,
-          "longitude": -0.1274210,
+          "longitude": -0.127421,
           "stationName": null
         },
         {
@@ -1465,7 +1471,7 @@
         },
         {
           "latitude": 51.5062533,
-          "longitude": -0.1270750,
+          "longitude": -0.127075,
           "stationName": null
         },
         {
@@ -1535,7 +1541,7 @@
         },
         {
           "latitude": 51.5058009,
-          "longitude": -0.1260370,
+          "longitude": -0.126037,
           "stationName": null
         },
         {
@@ -1545,7 +1551,7 @@
         },
         {
           "latitude": 51.5058593,
-          "longitude": -0.1258600,
+          "longitude": -0.12586,
           "stationName": null
         },
         {
@@ -1560,17 +1566,17 @@
         },
         {
           "latitude": 51.5059637,
-          "longitude": -0.1254630,
+          "longitude": -0.125463,
           "stationName": null
         },
         {
           "latitude": 51.5059912,
-          "longitude": -0.1253450,
+          "longitude": -0.125345,
           "stationName": null
         },
         {
           "latitude": 51.5060179,
-          "longitude": -0.1252390,
+          "longitude": -0.125239,
           "stationName": null
         },
         {
@@ -1669,7 +1675,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5064720,
+          "latitude": 51.506472,
           "longitude": -0.1235211,
           "stationName": null
         },
@@ -1684,7 +1690,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5066640,
+          "latitude": 51.506664,
           "longitude": -0.1233575,
           "stationName": null
         },
@@ -1720,7 +1726,7 @@
         },
         {
           "latitude": 51.5065638,
-          "longitude": -0.1225850,
+          "longitude": -0.122585,
           "stationName": null
         },
         {
@@ -1789,7 +1795,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5058560,
+          "latitude": 51.505856,
           "longitude": -0.1228049,
           "stationName": null
         },
@@ -1805,7 +1811,7 @@
         },
         {
           "latitude": 51.5057233,
-          "longitude": -0.1228760,
+          "longitude": -0.122876,
           "stationName": null
         },
         {
@@ -1845,7 +1851,7 @@
         },
         {
           "latitude": 51.5049962,
-          "longitude": -0.1231080,
+          "longitude": -0.123108,
           "stationName": null
         },
         {
@@ -1919,7 +1925,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5031630,
+          "latitude": 51.503163,
           "longitude": -0.1236123,
           "stationName": null
         },
@@ -1934,7 +1940,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5027890,
+          "latitude": 51.502789,
           "longitude": -0.1237384,
           "stationName": null
         },
@@ -1974,7 +1980,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5016470,
+          "latitude": 51.501647,
           "longitude": -0.1240495,
           "stationName": null
         },
@@ -1985,11 +1991,11 @@
         },
         {
           "latitude": 51.5014082,
-          "longitude": -0.1240200,
+          "longitude": -0.12402,
           "stationName": null
         },
         {
-          "latitude": 51.5012730,
+          "latitude": 51.501273,
           "longitude": -0.1240227,
           "stationName": null
         },
@@ -2014,7 +2020,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5009290,
+          "latitude": 51.500929,
           "longitude": -0.1237303,
           "stationName": null
         },
@@ -2024,7 +2030,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5009140,
+          "latitude": 51.500914,
           "longitude": -0.1232395,
           "stationName": null
         },
@@ -2034,7 +2040,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5008940,
+          "latitude": 51.500894,
           "longitude": -0.1227808,
           "stationName": null
         },
@@ -2104,13 +2110,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5008080,
+          "latitude": 51.500808,
           "longitude": -0.1200369,
           "stationName": null
         },
         {
           "latitude": 51.5008021,
-          "longitude": -0.1198250,
+          "longitude": -0.119825,
           "stationName": null
         },
         {
@@ -2125,12 +2131,12 @@
         },
         {
           "latitude": 51.5007921,
-          "longitude": -0.1193100,
+          "longitude": -0.11931,
           "stationName": null
         },
         {
           "latitude": 51.5008005,
-          "longitude": -0.1190780,
+          "longitude": -0.119078,
           "stationName": null
         },
         {
@@ -2174,7 +2180,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5007420,
+          "latitude": 51.500742,
           "longitude": -0.1174861,
           "stationName": null
         },
@@ -2185,11 +2191,11 @@
         },
         {
           "latitude": 51.5006151,
-          "longitude": -0.1172340,
+          "longitude": -0.117234,
           "stationName": null
         },
         {
-          "latitude": 51.5005400,
+          "latitude": 51.50054,
           "longitude": -0.1170918,
           "stationName": null
         },
@@ -2200,11 +2206,11 @@
         },
         {
           "latitude": 51.5004782,
-          "longitude": -0.1166600,
+          "longitude": -0.11666,
           "stationName": null
         },
         {
-          "latitude": 51.5005350,
+          "latitude": 51.500535,
           "longitude": -0.1164293,
           "stationName": null
         },
@@ -2240,13 +2246,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5011060,
+          "latitude": 51.501106,
           "longitude": -0.1160538,
           "stationName": null
         },
         {
           "latitude": 51.5011928,
-          "longitude": -0.1162630,
+          "longitude": -0.116263,
           "stationName": null
         },
         {
@@ -2265,7 +2271,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5016370,
+          "latitude": 51.501637,
           "longitude": -0.1170892,
           "stationName": null
         },
@@ -2276,7 +2282,7 @@
         },
         {
           "latitude": 51.5017739,
-          "longitude": -0.1169550,
+          "longitude": -0.116955,
           "stationName": null
         },
         {
@@ -2295,7 +2301,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5022380,
+          "latitude": 51.502238,
           "longitude": -0.1165956,
           "stationName": null
         },
@@ -2330,7 +2336,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5042950,
+          "latitude": 51.504295,
           "longitude": -0.1146108,
           "stationName": null
         },
@@ -2365,7 +2371,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5049770,
+          "latitude": 51.504977,
           "longitude": -0.1140998,
           "stationName": null
         },
@@ -2411,7 +2417,7 @@
         },
         {
           "latitude": 51.5057141,
-          "longitude": -0.1144070,
+          "longitude": -0.114407,
           "stationName": null
         },
         {
@@ -2451,7 +2457,7 @@
         },
         {
           "latitude": 51.5063051,
-          "longitude": -0.1149380,
+          "longitude": -0.114938,
           "stationName": null
         },
         {
@@ -2460,7 +2466,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5064370,
+          "latitude": 51.506437,
           "longitude": -0.1150601,
           "stationName": null
         },
@@ -2470,7 +2476,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5066290,
+          "latitude": 51.506629,
           "longitude": -0.1152304,
           "stationName": null
         },
@@ -2501,7 +2507,7 @@
         },
         {
           "latitude": 51.5071615,
-          "longitude": -0.1156810,
+          "longitude": -0.115681,
           "stationName": null
         },
         {
@@ -2575,7 +2581,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5082350,
+          "latitude": 51.508235,
           "longitude": -0.1166224,
           "stationName": null
         },
@@ -2590,7 +2596,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5084470,
+          "latitude": 51.508447,
           "longitude": -0.1168115,
           "stationName": null
         },
@@ -2605,7 +2611,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5086540,
+          "latitude": 51.508654,
           "longitude": -0.1170114,
           "stationName": null
         },
@@ -2645,7 +2651,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5092500,
+          "latitude": 51.50925,
           "longitude": -0.1175237,
           "stationName": null
         },
@@ -2701,7 +2707,7 @@
         },
         {
           "latitude": 51.5101038,
-          "longitude": -0.1183230,
+          "longitude": -0.118323,
           "stationName": null
         },
         {
@@ -2765,7 +2771,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5111730,
+          "latitude": 51.511173,
           "longitude": -0.1191625,
           "stationName": null
         },
@@ -2835,7 +2841,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5107340,
+          "latitude": 51.510734,
           "longitude": -0.1206726,
           "stationName": null
         },
@@ -2855,7 +2861,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5105520,
+          "latitude": 51.510552,
           "longitude": -0.1211339,
           "stationName": null
         },
@@ -2875,7 +2881,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5103200,
+          "latitude": 51.51032,
           "longitude": -0.1217186,
           "stationName": null
         },
@@ -2890,8 +2896,8 @@
           "stationName": null
         },
         {
-          "latitude": 51.5101330,
-          "longitude": -0.1221800,
+          "latitude": 51.510133,
+          "longitude": -0.12218,
           "stationName": null
         },
         {
@@ -2925,7 +2931,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5097090,
+          "latitude": 51.509709,
           "longitude": -0.1231992,
           "stationName": null
         },
@@ -2975,7 +2981,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5090730,
+          "latitude": 51.509073,
           "longitude": -0.1244867,
           "stationName": null
         },
@@ -3016,12 +3022,12 @@
         },
         {
           "latitude": 51.5085789,
-          "longitude": -0.1254040,
+          "longitude": -0.125404,
           "stationName": null
         },
         {
           "latitude": 51.5084703,
-          "longitude": -0.1255730,
+          "longitude": -0.125573,
           "stationName": "Cross Station"
         },
         {
@@ -3045,7 +3051,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5080780,
+          "latitude": 51.508078,
           "longitude": -0.1262999,
           "stationName": null
         },
@@ -3071,7 +3077,7 @@
         },
         {
           "latitude": 51.5076941,
-          "longitude": -0.1270080,
+          "longitude": -0.127008,
           "stationName": null
         },
         {
@@ -3085,13 +3091,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5074770,
+          "latitude": 51.507477,
           "longitude": -0.1272655,
           "stationName": null
         },
         {
           "latitude": 51.5073619,
-          "longitude": -0.1273030,
+          "longitude": -0.127303,
           "stationName": null
         },
         {
@@ -3111,7 +3117,7 @@
         },
         {
           "latitude": 51.5069729,
-          "longitude": -0.1274210,
+          "longitude": -0.127421,
           "stationName": null
         },
         {
@@ -3166,7 +3172,7 @@
         },
         {
           "latitude": 51.5062533,
-          "longitude": -0.1270750,
+          "longitude": -0.127075,
           "stationName": null
         },
         {
@@ -3236,7 +3242,7 @@
         },
         {
           "latitude": 51.5058009,
-          "longitude": -0.1260370,
+          "longitude": -0.126037,
           "stationName": null
         },
         {
@@ -3246,7 +3252,7 @@
         },
         {
           "latitude": 51.5058593,
-          "longitude": -0.1258600,
+          "longitude": -0.12586,
           "stationName": null
         },
         {
@@ -3261,17 +3267,17 @@
         },
         {
           "latitude": 51.5059637,
-          "longitude": -0.1254630,
+          "longitude": -0.125463,
           "stationName": null
         },
         {
           "latitude": 51.5059912,
-          "longitude": -0.1253450,
+          "longitude": -0.125345,
           "stationName": null
         },
         {
           "latitude": 51.5060179,
-          "longitude": -0.1252390,
+          "longitude": -0.125239,
           "stationName": null
         },
         {
@@ -3370,7 +3376,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5064720,
+          "latitude": 51.506472,
           "longitude": -0.1235211,
           "stationName": null
         },
@@ -3385,7 +3391,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5066640,
+          "latitude": 51.506664,
           "longitude": -0.1233575,
           "stationName": null
         },
@@ -3421,7 +3427,7 @@
         },
         {
           "latitude": 51.5065638,
-          "longitude": -0.1225850,
+          "longitude": -0.122585,
           "stationName": null
         },
         {
@@ -3490,7 +3496,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5058560,
+          "latitude": 51.505856,
           "longitude": -0.1228049,
           "stationName": null
         },
@@ -3506,7 +3512,7 @@
         },
         {
           "latitude": 51.5057233,
-          "longitude": -0.1228760,
+          "longitude": -0.122876,
           "stationName": null
         },
         {
@@ -3546,7 +3552,7 @@
         },
         {
           "latitude": 51.5049962,
-          "longitude": -0.1231080,
+          "longitude": -0.123108,
           "stationName": null
         },
         {
@@ -3620,7 +3626,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5031630,
+          "latitude": 51.503163,
           "longitude": -0.1236123,
           "stationName": null
         },
@@ -3635,7 +3641,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5027890,
+          "latitude": 51.502789,
           "longitude": -0.1237384,
           "stationName": null
         },
@@ -3675,7 +3681,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5016470,
+          "latitude": 51.501647,
           "longitude": -0.1240495,
           "stationName": null
         },
@@ -3686,11 +3692,11 @@
         },
         {
           "latitude": 51.5014082,
-          "longitude": -0.1240200,
+          "longitude": -0.12402,
           "stationName": null
         },
         {
-          "latitude": 51.5012730,
+          "latitude": 51.501273,
           "longitude": -0.1240227,
           "stationName": null
         },
@@ -3715,7 +3721,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5009290,
+          "latitude": 51.500929,
           "longitude": -0.1237303,
           "stationName": null
         },
@@ -3725,7 +3731,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5009140,
+          "latitude": 51.500914,
           "longitude": -0.1232395,
           "stationName": null
         },
@@ -3735,7 +3741,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5008940,
+          "latitude": 51.500894,
           "longitude": -0.1227808,
           "stationName": null
         },
@@ -3805,13 +3811,13 @@
           "stationName": null
         },
         {
-          "latitude": 51.5008080,
+          "latitude": 51.500808,
           "longitude": -0.1200369,
           "stationName": null
         },
         {
           "latitude": 51.5008021,
-          "longitude": -0.1198250,
+          "longitude": -0.119825,
           "stationName": null
         },
         {
@@ -3826,12 +3832,12 @@
         },
         {
           "latitude": 51.5007921,
-          "longitude": -0.1193100,
+          "longitude": -0.11931,
           "stationName": null
         },
         {
           "latitude": 51.5008005,
-          "longitude": -0.1190780,
+          "longitude": -0.119078,
           "stationName": null
         },
         {
@@ -3875,7 +3881,7 @@
           "stationName": null
         },
         {
-          "latitude": 51.5007420,
+          "latitude": 51.500742,
           "longitude": -0.1174861,
           "stationName": null
         },
@@ -3886,11 +3892,11 @@
         },
         {
           "latitude": 51.5006151,
-          "longitude": -0.1172340,
+          "longitude": -0.117234,
           "stationName": null
         },
         {
-          "latitude": 51.5005400,
+          "latitude": 51.50054,
           "longitude": -0.1170918,
           "stationName": null
         },
@@ -3901,11 +3907,11 @@
         },
         {
           "latitude": 51.5004782,
-          "longitude": -0.1166600,
+          "longitude": -0.11666,
           "stationName": null
         },
         {
-          "latitude": 51.5005350,
+          "latitude": 51.500535,
           "longitude": -0.1164293,
           "stationName": null
         },
