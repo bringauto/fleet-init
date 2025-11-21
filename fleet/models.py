@@ -1,8 +1,13 @@
 import pydantic
 
 
+TenantName = str
+CarName = str
+RouteName = str
+
+
 class Car(pydantic.BaseModel):
-    name: str
+    name: CarName
     hwId: str
     adminPhone: str
     underTest: bool
@@ -23,13 +28,13 @@ class Station(pydantic.BaseModel):
 
 
 class Route(pydantic.BaseModel):
-    name: str
+    name: RouteName
     color: str
     stops: list[Station]
 
 
 class Map(pydantic.BaseModel):
-    tenant: str
+    tenant: TenantName
     cars: list[Car]
     stops: list[Stop]
     routes: list[Route]
