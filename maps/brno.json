@@ -30,6 +30,12 @@
   "orders": [],
   "stops": [
     {
+      "name": "TestStop",
+      "contactPhone": "123",
+      "latitude": 49.20500309523,
+      "longitude": 16.61337934367
+    },
+    {
       "name": "Drobného",
       "contactPhone": "123",
       "latitude": 49.20500309523,
